@@ -3,6 +3,7 @@
 {% block content %}
 
 <h4>Topics</h4>
+<a href="{% url 'learning_logs:new_topic' %}"> + Add a Topic</a>
 <ul>
 {% for topic in topics %}
     <li>
