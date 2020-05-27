@@ -15,9 +15,15 @@
                 <p>{{ entry.text|linebreaks }}</p>
             </li>
             <p>
+<<<<<<< HEAD
+                <a href="{% url 'learning_logs:edit_entry' entry.id%}">Edit</a>
+            </p>
+        
+=======
                 <a href="{% url 'learning_logs:edit_entry' entry.id %}">Edit</a>
             </p>
             
+>>>>>>> master
         {% empty %}
             <p>There are no entries for this topic</p>
         {% endfor %}
