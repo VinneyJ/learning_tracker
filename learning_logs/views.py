@@ -34,10 +34,13 @@ def topic(request, topic_id):
 def new_topic(request):
     
     if request.method != 'POST':
+        
         #if no data is submitted
         form = TopicForm()
+        
     else:
         form = TopicForm(data=request.POST)
+        
         if form.is_valid():
             #Associate the user to the topic first
             new_topic = form.save(commit=False)
@@ -45,9 +48,11 @@ def new_topic(request):
             new_topic.owner = request.user
             new_topic.save()
             return redirect('learning_logs:topics')
+        
     #Display the blank form
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
+
 
 @login_required()
 def new_entry(request, topic_id):
@@ -74,8 +79,10 @@ def new_entry(request, topic_id):
 def edit_entry(request, entry_id):
     entry = Entry.objects.get(id=entry_id)
     topic = entry.topic
+
     if topic.owner != request.user:
         raise Http404
+
     
     if request.method != 'POST':
         form = EntryForm(instance=entry)
@@ -84,6 +91,6 @@ def edit_entry(request, entry_id):
         if form.is_valid():
             form.save()
             return redirect('learning_logs:topic', topic_id=topic.id)
-        
-    context = {'entry':entry, 'form':form, 'topic':topic}
+
+    context = {'entry': entry, 'form': form, 'topic': topic}
     return render(request, 'learning_logs/edit_entry.html', context)
