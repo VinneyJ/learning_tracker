@@ -9,6 +9,9 @@
     <li>
         <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
     </li>
+    <p>
+        <a href="{% url 'learning_logs:edit_topic' topic.id %}">Edit</a>
+    </p>
 {% empty %}
     <p>No topics to display</p>
 {% endfor %}

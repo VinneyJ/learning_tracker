@@ -53,6 +53,25 @@ def new_topic(request):
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
 
+def edit_topic(request, topic_id):
+    topic = Topic.objects.get(id=topic_id)
+    
+    if topic.owner != request.user:
+        raise Http404
+    
+    if request.method != 'POST':
+        form = TopicForm(instance=topic)
+    else:
+        form = TopicForm(instance=topic, data=request.POST)
+        if form.is_valid():
+            new_form = form.save()
+            return redirect('learning_logs:topic', topic_id=topic.id)
+        
+    context = {'topic':topic, 'form':form}
+    return render(request, 'learning_logs/edit_topic.html', context)
+            
+    
+
 
 @login_required()
 def new_entry(request, topic_id):

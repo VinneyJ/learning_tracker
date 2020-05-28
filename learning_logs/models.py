@@ -22,9 +22,8 @@ class Entry(models.Model):
         
         
     def __str__(self):
-        if self.text[:50]:
+        
             return f"{self.text[:50]}..."
-        elif self.text != self.text[:50]:
-            return self.text
+
         
     
