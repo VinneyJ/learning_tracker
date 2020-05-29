@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
 from django.http import Http404
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
@@ -113,3 +115,13 @@ def edit_entry(request, entry_id):
 
     context = {'entry': entry, 'form': form, 'topic': topic}
     return render(request, 'learning_logs/edit_entry.html', context)
+
+# def delete_entry(request, entry_id):
+#     entry = Entry.objects.get(id=entry_id)
+#     entry.delete()
+#     return redirect('learning_logs:topic')
+
+class EntryDeleteView(DeleteView):
+    model = Entry
+    template = 'entry_delete.html'
+    success_url = reverse_lazy('learning_logs:topic')
